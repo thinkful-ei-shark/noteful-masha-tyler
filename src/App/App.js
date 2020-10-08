@@ -6,17 +6,52 @@ import NotePageNav from "../NotePageNav/NotePageNav";
 import NoteListMain from "../NoteListMain/NoteListMain";
 import NotePageMain from "../NotePageMain/NotePageMain";
 import AddNoteMain from "../AddNoteMain/AddNoteMain";
+import cuid from 'cuid'
+
 import Context from "../Context";
 import "./App.css";
 
+const baseURL = 'http://localhost:9090'
+
 class App extends Component {
   deleteNote = (id) => {
-    const newNotes = this.state.notes.filter((note) => note.id !== id);
-    this.setState({ ...this.state, notes: newNotes });
+    console.log(id);
+    this.apiCall(`${baseURL}/notes/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json'
+      }
+    }).then(data => {
+      const newNotes = this.state.notes.filter((note) => note.id !== id);
+      this.setState({ ...this.state, notes: newNotes });
+    })
   };
 
-  fetchapi(url) {
-    return fetch(url)
+  createNote = (event, noteData) => {
+    event.preventDefault();
+    const note = {
+      id: cuid(),
+      name: noteData.name.value,
+      modified: new Date(Date.now()).toISOString(),
+      folderId: noteData.folder.value,
+      content: noteData.content.value
+    }
+    this.apiCall(`${baseURL}/notes`,
+      {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'body': note
+        },
+        body: JSON.stringify(note)
+      }).then(data => {
+        this.setState({notes: [...this.state.notes, note]})
+        console.log('create note', note)
+      })
+  }
+
+  apiCall(url, params) {
+    return fetch(url, params)
       .then((response) => {
         if (!response.ok) {
           return response.json().then((error) => {
@@ -26,7 +61,6 @@ class App extends Component {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {
@@ -40,11 +74,11 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.fetchapi("http://localhost:9090/folders").then((data) =>
+    this.apiCall(`${baseURL}/folders`).then((data) =>
       this.setState({ ...this.state, folders: data })
     );
 
-    this.fetchapi("http://localhost:9090/notes").then((data) =>
+    this.apiCall(`${baseURL}/notes`).then((data) =>
       this.setState({ ...this.state, notes: data })
     );
   }
@@ -82,6 +116,9 @@ class App extends Component {
             ...this.state,
             deleteNote: this.deleteNote,
             deleteFolder: this.deleteFolder,
+            apiCall: this.apiCall,
+            createNote: this.createNote,
+            baseURL: baseURL
           }}
         >
           <nav className="App__nav">{this.renderNavRoutes()}</nav>
