@@ -5,6 +5,7 @@ import NoteListNav from "../NoteListNav/NoteListNav";
 import NotePageNav from "../NotePageNav/NotePageNav";
 import NoteListMain from "../NoteListMain/NoteListMain";
 import NotePageMain from "../NotePageMain/NotePageMain";
+import AddNoteMain from "../AddNoteMain/AddNoteMain";
 import Context from "../context";
 import "./App.css";
 
@@ -68,6 +69,7 @@ class App extends Component {
           <Route exact key={path} path={path} component={NoteListMain} />
         ))}
         <Route path="/note/:noteId" component={NotePageMain} />
+        <Route path="/add-note" component={AddNoteMain} />
       </>
     );
   }
