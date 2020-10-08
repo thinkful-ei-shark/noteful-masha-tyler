@@ -7,10 +7,12 @@ export default class AddNote extends React.Component {
 
   state = {
     name: {
-      value: ''
+      value: '',
+      touched: false
     },
     content: {
-      value: ''
+      value: '',
+      touched: false
     },
     folder: {
       value: ''
@@ -19,11 +21,11 @@ export default class AddNote extends React.Component {
   }
 
   updateName = (name) => {
-    this.setState({name: {value: name}});
+    this.setState({name: {value: name, touched:true}});
   }
 
   updateFolder = (folderId) => {
-    this.setState({folder: {value: folderId}})
+    this.setState({folder: {value: folderId,touched:true}})
   }
 
   updateContent = (content) => {
@@ -42,8 +44,14 @@ export default class AddNote extends React.Component {
             <input type="text" id="note-name" name="note-name" placeholder="Enter the note name"
                 onChange={((e)=>this.updateName(e.target.value))} />
           </p>
+          {this.state.name.touched &&<p>Test:
+            {this.state.name.value}
+          </p>}
           <p>
             <label htmlFor="note-content">Content</label>
+          </p>
+          <p>
+            Error handling Content
           </p>
           <p>
             <textarea id="note-content" name="note-content" placeholder="Enter content" onChange={(e)=>this.updateContent(e.target.value)}></textarea>
