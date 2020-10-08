@@ -6,6 +6,7 @@ import NotePageNav from "../NotePageNav/NotePageNav";
 import NoteListMain from "../NoteListMain/NoteListMain";
 import NotePageMain from "../NotePageMain/NotePageMain";
 import AddNoteMain from "../AddNoteMain/AddNoteMain";
+import AddFolderMain from '../AddFolderMain/AddFolderMain.js';
 import cuid from 'cuid'
 
 import Context from "../Context";
@@ -48,6 +49,25 @@ class App extends Component {
         this.setState({notes: [...this.state.notes, note]})
         console.log('create note', note)
       })
+  }
+
+  createFolder = (event, folderData) => {
+    event.preventDefault();
+    const folder = {
+      id: cuid(),
+      name: folderData.name.value
+    }
+    this.apiCall(`${baseURL}/folders`,
+    {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(folder)
+    }).then(data => {
+      this.setState({folders: [...this.state.folders, folder]})
+      console.log('create folder', folder);
+    })
   }
 
   apiCall(url, params) {
@@ -104,6 +124,7 @@ class App extends Component {
         ))}
         <Route path="/note/:noteId" component={NotePageMain} />
         <Route path="/add-note" component={AddNoteMain} />
+        <Route path='/add-folder' component={AddFolderMain} />
       </>
     );
   }
@@ -118,6 +139,7 @@ class App extends Component {
             deleteFolder: this.deleteFolder,
             apiCall: this.apiCall,
             createNote: this.createNote,
+            createFolder: this.createFolder,
             baseURL: baseURL
           }}
         >
