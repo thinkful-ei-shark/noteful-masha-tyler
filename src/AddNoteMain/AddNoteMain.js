@@ -5,16 +5,35 @@ export default class AddNote extends React.Component {
 
   static contextType = Context;
 
+  state = {
+    name: {
+      value: ''
+    },
+    content: {
+      value: ''
+    },
+    folder: {
+      value: ''
+    },
+    id: '',
+    folderId: ''
+  }
+
+  updateName = (name) => {
+    this.setState({name: {value: name}});
+  }
+
   render() {
     return (
       <section className="create-note">
         <h2>Compose</h2>
         <form>
           <p>
-            <label for="note-title">Title</label>
+            <label for="note-name">Name</label>
           </p>
           <p>
-            <input type="text" id="note-title" name="note-title" placeholder="Enter the note title" />
+            <input type="text" id="note-name" name="note-name" placeholder="Enter the note name"
+                onChange={((e)=>this.updateName(e.target.value))} />
           </p>
           <p>
             <label for="note-content">Content</label>
