@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Note.css'
-import Context from '../context'
+import Context from '../Context'
 
 function deleteNoteApi(id, callback) {
   fetch(`http://localhost:9090/notes/${id}`, {

@@ -1,7 +1,7 @@
 import React from 'react'
 import Note from '../Note/Note'
 import './NotePageMain.css'
-import Context from '../context'
+import Context from '../Context'
 import {findNote} from '../notes-helpers'
 
 

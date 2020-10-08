@@ -1,6 +1,5 @@
-import { faFolder } from '@fortawesome/free-solid-svg-icons';
 import React from 'react'
-import Context from '../context'
+import Context from '../Context'
 
 export default class AddNote extends React.Component {
 

@@ -6,7 +6,7 @@ import NotePageNav from "../NotePageNav/NotePageNav";
 import NoteListMain from "../NoteListMain/NoteListMain";
 import NotePageMain from "../NotePageMain/NotePageMain";
 import AddNoteMain from "../AddNoteMain/AddNoteMain";
-import Context from "../context";
+import Context from "../Context";
 import "./App.css";
 
 class App extends Component {
