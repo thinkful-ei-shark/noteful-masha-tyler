@@ -1,5 +1,6 @@
 import React from 'react'
 import Context from '../Context'
+import cuid from 'cuid'
 
 export default class AddNote extends React.Component {
 
@@ -45,11 +46,24 @@ export default class AddNote extends React.Component {
     if (!this.state.folder.value) return 'Error: must select folder';
   }
 
+  createNote= (event) => {
+    event.preventDefault();
+    const date = new Date(Date.now()).toISOString()
+    const note = {
+      id: cuid(),
+      name: this.state.name.value,
+      modified: date,
+      folderId: this.state.folder.value,
+      content: this.state.content.value
+    }
+    console.log('create note', note)
+  }
+
   render() {
     return (
       <section className="create-note">
         <h2>Compose</h2>
-        <form>
+        <form onSubmit={(e)=>this.createNote(e)}>
           <p>
             <label htmlFor="note-title">Title</label>
           </p>
