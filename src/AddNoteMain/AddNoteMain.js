@@ -1,6 +1,10 @@
+import { faFolder } from '@fortawesome/free-solid-svg-icons';
 import React from 'react'
+import Context from '../context'
 
 export default class AddNote extends React.Component {
+
+  static contextType = Context;
 
   render() {
     return (
@@ -25,6 +29,9 @@ export default class AddNote extends React.Component {
           <p>
             <select id="folder" name="folder">
               <option>Select Folder</option>
+              {this.context.folders.map(folder => 
+                <option value={folder.id}>{folder.name}</option>
+              )}
             </select>
           </p>
           <p>
