@@ -15,12 +15,19 @@ export default class AddNote extends React.Component {
     folder: {
       value: ''
     },
-    id: '',
-    folderId: ''
+    id: ''
   }
 
   updateName = (name) => {
     this.setState({name: {value: name}});
+  }
+
+  updateFolder = (folderId) => {
+    this.setState({folder: {value: folderId}})
+  }
+
+  updateContent = (content) => {
+    this.setState({content: {value: content}})
   }
 
   render() {
@@ -39,13 +46,13 @@ export default class AddNote extends React.Component {
             <label htmlFor="note-content">Content</label>
           </p>
           <p>
-            <textarea id="note-content" name="note-content" placeholder="Enter content"></textarea>
+            <textarea id="note-content" name="note-content" placeholder="Enter content" onChange={(e)=>this.updateContent(e.target.value)}></textarea>
           </p>
           <p>
             <label htmlFor="folder">Folder</label>
           </p>
           <p>
-            <select id="folder" name="folder">
+            <select id="folder" name="folder" onChange={(e)=>this.updateFolder(e.target.value)}>
               <option>Select Folder</option>
               {this.context.folders.map(folder => 
                 <option key={folder.id} value={folder.id}>{folder.name}</option>
