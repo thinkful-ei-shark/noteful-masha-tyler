@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -47,3 +48,8 @@ export default class Note extends React.Component {
   }
 }
 
+Note.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  onDeleteNote: PropTypes.func
+};
