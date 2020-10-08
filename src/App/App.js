@@ -7,7 +7,8 @@ import NoteListMain from "../NoteListMain/NoteListMain";
 import NotePageMain from "../NotePageMain/NotePageMain";
 import AddNoteMain from "../AddNoteMain/AddNoteMain";
 import AddFolderMain from '../AddFolderMain/AddFolderMain.js';
-import cuid from 'cuid'
+import ErrorPage from '../ErrorPage/ErrorPage';
+import cuid from 'cuid';
 
 import Context from "../Context";
 import "./App.css";
@@ -132,26 +133,28 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Context.Provider
-          value={{
-            ...this.state,
-            deleteNote: this.deleteNote,
-            deleteFolder: this.deleteFolder,
-            apiCall: this.apiCall,
-            createNote: this.createNote,
-            createFolder: this.createFolder,
-            baseURL: baseURL
-          }}
-        >
-          <nav className="App__nav">{this.renderNavRoutes()}</nav>
-          <header className="App__header">
-            <h1>
-              <Link to="/">Noteful</Link>{" "}
-              <FontAwesomeIcon icon="check-double" />
-            </h1>
-          </header>
-          <main className="App__main">{this.renderMainRoutes()}</main>
-        </Context.Provider>
+        <ErrorPage>
+          <Context.Provider
+            value={{
+              ...this.state,
+              deleteNote: this.deleteNote,
+              deleteFolder: this.deleteFolder,
+              apiCall: this.apiCall,
+              createNote: this.createNote,
+              createFolder: this.createFolder,
+              baseURL: baseURL
+            }}
+          >
+            <nav className="App__nav">{this.renderNavRoutes()}</nav>
+            <header className="App__header">
+              <h1>
+                <Link to="/">Noteful</Link>{" "}
+                <FontAwesomeIcon icon="check-double" />
+              </h1>
+            </header>
+            <main className="App__main">{this.renderMainRoutes()}</main>
+          </Context.Provider>
+        </ErrorPage>
       </div>
     );
   }
